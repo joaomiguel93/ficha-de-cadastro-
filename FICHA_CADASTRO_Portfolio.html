@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha de Cadastro – Novo Colaborador | João Miguel E. F.</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root {
+    --azul:    #1f2937;
+    --azul-m:  #0e6b7a;
+    --azul-l:  #e8eef0;
+    --cinza:   #f4f6f7;
+    --borda:   #b0c4cc;
+    --texto:   #111827;
+    --obrig:   #dc2626;
+    --radius:  8px;
+    --sombra:  0 2px 16px rgba(79,70,229,.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    background: var(--cinza);
+    color: var(--texto);
+    font-size: 14px;
+    padding: 20px 12px 40px;
+  }
+
+  /* ── Cabeçalho ── */
+  header {
+    background: var(--azul);
+    color: #fff;
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 18px 24px 14px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  header h1 { font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  header p {
+    font-size: .78rem;
+    margin-top: 6px;
+    opacity: .85;
+    line-height: 1.5;
+  }
+  header a { color: #90cad6; }
+
+  /* ── Card principal ── */
+  .card {
+    background: #fff;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 24px 32px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--sombra);
+  }
+
+  /* ── Seções ── */
+  .secao {
+    margin-bottom: 28px;
+  }
+  .secao-titulo {
+    background: var(--azul);
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+  }
+
+  /* ── Grid de campos ── */
+  .grid {
+    display: grid;
+    gap: 12px 16px;
+  }
+  .g1  { grid-template-columns: 1fr; }
+  .g2  { grid-template-columns: 1fr 1fr; }
+  .g3  { grid-template-columns: 1fr 1fr 1fr; }
+  .g4  { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .g24 { grid-template-columns: 2fr 4fr; }
+  .g13 { grid-template-columns: 1fr 3fr; }
+  .g22 { grid-template-columns: 2fr 2fr; }
+  .g211{ grid-template-columns: 2fr 1fr 1fr; }
+  .g1111{ grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .g2111{ grid-template-columns: 2fr 1fr 1fr 1fr; }
+  .g31 { grid-template-columns: 3fr 1fr; }
+
+  /* ── Campos ── */
+  .campo { display: flex; flex-direction: column; }
+  label {
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--azul-m);
+    margin-bottom: 4px;
+  }
+  label .obrig { color: var(--obrig); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="time"],
+  select {
+    border: 1px solid var(--borda);
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-size: .88rem;
+    color: var(--texto);
+    background: #fff;
+    width: 100%;
+    transition: border-color .2s;
+    height: 36px;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--azul-m);
+    box-shadow: 0 0 0 3px rgba(37,99,168,.15);
+  }
+
+  /* ── Checkboxes / radios ── */
+  .opcoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+    padding-top: 6px;
+  }
+  .opcoes label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .82rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--texto);
+    cursor: pointer;
+  }
+  .opcoes input[type="radio"],
+  .opcoes input[type="checkbox"] {
+    width: 15px; height: 15px;
+    accent-color: var(--azul-m);
+    cursor: pointer;
+  }
+
+  /* ── Tabela filhos ── */
+  .tabela-filhos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+  }
+  .tabela-filhos th {
+    background: var(--azul-l);
+    color: var(--azul);
+    font-size: .68rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 6px 8px;
+    border: 1px solid var(--borda);
+    text-align: left;
+  }
+  .tabela-filhos td {
+    border: 1px solid var(--borda);
+    padding: 4px 6px;
+  }
+  .tabela-filhos td:first-child {
+    text-align: center;
+    width: 32px;
+    font-weight: 700;
+    background: var(--cinza);
+    color: var(--azul);
+  }
+  .tabela-filhos input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: 4px 2px;
+    font-size: .85rem;
+    height: auto;
+  }
+  .tabela-filhos input:focus {
+    outline: none;
+    background: #eef5ff;
+    border-radius: 3px;
+  }
+
+  /* ── Checklist documentos ── */
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    padding-top: 4px;
+  }
+  .checklist label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: .82rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--texto);
+    cursor: pointer;
+    line-height: 1.4;
+  }
+  .checklist input[type="checkbox"] {
+    width: 15px; height: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--azul-m);
+  }
+
+  /* ── Aviso horário sábado ── */
+  .sub-row {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    gap: 8px 12px;
+    align-items: center;
+  }
+  .sub-label {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--azul);
+    white-space: nowrap;
+  }
+
+  /* ── Aviso documentos legíveis ── */
+  .aviso-docs {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: #fff8e1;
+    border: 1px solid #f59e0b;
+    border-left: 4px solid #f59e0b;
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-top: 4px;
+    font-size: .82rem;
+    line-height: 1.55;
+    color: #78350f;
+  }
+  .aviso-icone { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Botões de ação ── */
+  .acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--borda);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    font-size: .88rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: filter .2s, transform .15s;
+    text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn:active { transform: scale(.97); }
+  .btn-limpar  { background: #e2e8f0; color: var(--texto); }
+  .btn-pdf     { background: #dc2626; color: #fff; }
+  .btn-whats   { background: #25d366; color: #fff; }
+
+  /* ── Aviso documentos legíveis ── */
+  .aviso-docs {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: #fff8e1;
+    border: 1px solid #f9a825;
+    border-left: 4px solid #f9a825;
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: .82rem;
+    line-height: 1.5;
+    color: #4a3200;
+  }
+  .aviso-icone { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── Validação visual ── */
+  .campo-invalido input,
+  .campo-invalido select {
+    border-color: var(--obrig) !important;
+    box-shadow: 0 0 0 3px rgba(192,57,43,.18) !important;
+  }
+  .campo-invalido .opcoes {
+    outline: 2px solid var(--obrig);
+    border-radius: 4px;
+    padding: 4px 6px;
+  }
+  #msg-validacao {
+    background: #fdf0ef;
+    border: 1px solid var(--obrig);
+    border-left: 4px solid var(--obrig);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: .82rem;
+    color: #7b1d1d;
+    line-height: 1.6;
+  }
+  #msg-validacao strong { display: block; margin-bottom: 6px; }
+  /* ── Botão e-mail ── */
+  .btn-email { background: #1f2937; color: #fff; }
+  /* ── Botão imprimir ── */
+  .btn-imprimir { background: #475569; color: #fff; }
+  /* ── Botão enviar (menu) ── */
+  .btn-enviar { background: #0e6b7a; color: #fff; }
+  #menu-enviar button:hover { background: var(--azul-l); }
+  /* ── Campo somente leitura (idade) ── */
+  input[readonly] { background: #f0f4f8 !important; color: #555; }
+  /* ── Textarea observações ── */
+  textarea:focus { outline:none; border-color:var(--azul-m) !important; box-shadow:0 0 0 3px rgba(37,99,168,.15); }
+  .rodape {
+    max-width: 860px;
+    margin: 14px auto 0;
+    font-size: .72rem;
+    color: #6b7280;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* ── Responsividade ── */
+  @media (max-width: 700px) {
+    .g2, .g3, .g4, .g24, .g13, .g22, .g211, .g1111, .g2111, .g31 {
+      grid-template-columns: 1fr;
+    }
+    .checklist { grid-template-columns: 1fr; }
+    .sub-row   { grid-template-columns: 1fr; }
+    .acoes { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+  }
+  @media (max-width: 480px) {
+    body { padding: 8px 4px 32px; }
+    .card { padding: 14px 12px 20px; }
+  }
+
+  /* ══════════════════════════════════════
+     IMPRESSÃO — 2 páginas A4 retrato
+  ══════════════════════════════════════ */
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 10mm 10mm 10mm 10mm;
+    }
+
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    body {
+      background: #fff !important;
+      padding: 0 !important;
+      font-size: 8pt !important;
+    }
+
+    header {
+      border-radius: 0 !important;
+      padding: 6px 10px !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+    }
+    header h1 { font-family: 'Playfair Display', Georgia, serif ! font-size: 9pt !important; }
+    header p  { font-size: 7pt !important; margin-top: 2px !important; }
+
+    .card {
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      max-width: 100% !important;
+      padding: 8px 10px !important;
+    }
+
+    .rodape { display: none !important; }
+    .acoes  { display: none !important; }
+    #dica-preench { display: none !important; }
+
+    /* Seções mais compactas */
+    .secao { margin-bottom: 8px !important; }
+    .secao-titulo {
+      font-size: 7pt !important;
+      padding: 3px 8px !important;
+      margin-bottom: 6px !important;
+    }
+
+    /* Grids mantêm colunas na impressão */
+    .g2  { grid-template-columns: 1fr 1fr !important; }
+    .g3  { grid-template-columns: 1fr 1fr 1fr !important; }
+    .g4  { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
+    .g24 { grid-template-columns: 2fr 4fr !important; }
+    .g13 { grid-template-columns: 1fr 3fr !important; }
+    .g31 { grid-template-columns: 3fr 1fr !important; }
+    .g211{ grid-template-columns: 2fr 1fr 1fr !important; }
+    .g1111{ grid-template-columns: 1fr 1fr 1fr 1fr !important; }
+    .g2111{ grid-template-columns: 2fr 1fr 1fr 1fr !important; }
+    .grid { gap: 4px 8px !important; }
+
+    label {
+      font-size: 6.5pt !important;
+      margin-bottom: 2px !important;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="time"],
+    select {
+      height: 18px !important;
+      padding: 1px 4px !important;
+      font-size: 8pt !important;
+      border: 1px solid #999 !important;
+      border-radius: 2px !important;
+    }
+
+    /* Campos condicionais: sábado e deficiência só imprimem se marcados */
+    #bloco-def,
+    #bloco-qtd,
+    #tabela-filhos-wrap,
+    #bloco-vt { display: block !important; }
+    /* bloco-sabado: controlado por JS antes de imprimir */
+
+    .opcoes { gap: 4px 10px !important; padding-top: 2px !important; }
+    .opcoes label { font-size: 7.5pt !important; }
+    .opcoes input[type="radio"],
+    .opcoes input[type="checkbox"] { width: 10px !important; height: 10px !important; }
+
+    /* Tabela filhos */
+    .tabela-filhos th { font-size: 6.5pt !important; padding: 3px 5px !important; }
+    .tabela-filhos td { padding: 2px 4px !important; }
+    .tabela-filhos input { font-size: 7.5pt !important; }
+
+    /* Checklist documentos */
+    .checklist {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 4px 16px !important;
+    }
+    .checklist label { font-size: 7.5pt !important; }
+    .checklist input[type="checkbox"] { width: 10px !important; height: 10px !important; }
+
+    /* Quebra de página: seção Filhos começa na página 2 */
+    .secao-quebra { page-break-before: always !important; }
+
+    /* Não quebrar dentro das seções */
+    .secao { page-break-inside: avoid !important; }
+
+    /* Fundo azul nas seções mantido */
+    .secao-titulo { background: #1a3a5c !important; color: #fff !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ficha de Cadastro – Novo Colaborador</h1>
+  <p>
+    Os documentos e a ficha podem ser enviados via e-mail &nbsp;|&nbsp;
+    O registro será feito em carteira digital conforme <strong>Portaria Nº 1.065 do MTE</strong>. &nbsp;|&nbsp;
+    Enviar ficha preenchida e todos os documentos necessários <strong>2 dias antes</strong> da data de admissão.
+  </p>
+</header>
+
+<p class="rodape" style="margin-top:0;margin-bottom:0;background:#f0f4f8;border-bottom:1px solid var(--borda);padding:8px 24px;max-width:860px;border-radius:0;text-align:left;display:flex;align-items:center;gap:8px;">
+  🔒 <strong>Privacidade:</strong> Nenhum dado é armazenado ou transmitido automaticamente. Ao fechar esta aba, todas as informações serão perdidas permanentemente.
+</p>
+
+<div class="card" id="formulario">
+
+  <!-- Dica de preenchimento -->
+  <div id="dica-preench" style="background:var(--azul-l);border-left:4px solid var(--azul-m);border-radius:var(--radius);padding:10px 14px;margin-bottom:18px;font-size:.82rem;color:var(--azul);line-height:1.55;">
+    📋 <strong>Como preencher:</strong> Campos com <span style="color:var(--obrig);font-weight:700;">*</span> são obrigatórios. Preencha do início ao fim e clique em <strong>Salvar PDF</strong> ao terminar. Dúvidas? Entre em contato com o RH.
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO 1 — PREENCHIMENTO PELA EMPRESA
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Preenchimento Obrigatório pela Empresa</div>
+
+    <div class="grid g2" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Empresa</label>
+        <input type="text" id="empresa" autocomplete="organization">
+      </div>
+      <div class="campo">
+        <label>CNPJ</label>
+        <input type="text" id="cnpj" placeholder="00.000.000/0000-00" maxlength="18">
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Data de Admissão <span class="obrig">*</span></label>
+        <input type="date" id="dt_admissao">
+      </div>
+      <div class="campo" style="grid-column: span 2">
+        <label>Função <span class="obrig">*</span></label>
+        <input type="text" id="funcao">
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Salário Mensal <span class="obrig">*</span></label>
+        <input type="text" id="salario" placeholder="R$ 0,00">
+      </div>
+      <div class="campo">
+        <label>C. Experiência em dias <small>(ex: 30+30 ou 45+45)</small></label>
+        <input type="text" id="contrato_exp" placeholder="30+30">
+      </div>
+      <div class="campo">
+        <label>Carga Horária <span class="obrig">*</span></label>
+        <input type="text" id="carga_horaria" placeholder="ex: 44h semanais">
+      </div>
+    </div>
+
+    <!-- Horário de trabalho -->
+    <div class="campo" style="margin-bottom:8px">
+      <label>Horário de Trabalho</label>
+    </div>
+    <div class="grid g4" style="margin-bottom:10px">
+      <div class="campo">
+        <label>Entrada</label>
+        <input type="time" id="hor_entrada">
+      </div>
+      <div class="campo">
+        <label>Intervalo Início</label>
+        <input type="time" id="hor_intervalo_ini">
+      </div>
+      <div class="campo">
+        <label>Intervalo Fim</label>
+        <input type="time" id="hor_intervalo_fim">
+      </div>
+      <div class="campo">
+        <label>Saída</label>
+        <input type="time" id="hor_saida">
+      </div>
+    </div>
+
+    <!-- Sábado -->
+    <div style="background:var(--azul-l); border-radius:var(--radius); padding:10px 14px; margin-bottom:4px;">
+      <div class="campo" style="margin-bottom:8px">
+        <label style="color:var(--azul)">Sábado</label>
+        <div class="opcoes">
+          <label><input type="radio" name="sabado" value="sim"> Sim</label>
+          <label><input type="radio" name="sabado" value="nao" checked> Não</label>
+        </div>
+      </div>
+      <div class="grid g2" id="bloco-sabado" style="display:none">
+        <div class="campo">
+          <label>Entrada (sábado)</label>
+          <input type="time" id="sab_entrada">
+        </div>
+        <div class="campo">
+          <label>Saída (sábado)</label>
+          <input type="time" id="sab_saida">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEPARADOR EMPRESA / FUNCIONÁRIO
+  ════════════════════════════════════════ -->
+  <div style="display:flex;align-items:center;gap:12px;margin:8px 0 20px;">
+    <div style="flex:1;height:2px;background:linear-gradient(to right,#1f2937,#b0c4cc);border-radius:2px;"></div>
+    <div style="background:#1f2937;color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:20px;white-space:nowrap;">Preenchimento pelo Colaborador</div>
+    <div style="flex:1;height:2px;background:linear-gradient(to left,#1f2937,#b0c4cc);border-radius:2px;"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO 2 — DADOS PESSOAIS
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Dados Pessoais do Novo Colaborador</div>
+
+    <div class="grid g1" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Nome Completo (sem abreviações) <span class="obrig">*</span></label>
+        <input type="text" id="nome" autocomplete="name">
+      </div>
+    </div>
+
+    <div class="grid g4" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Data de Nascimento <span class="obrig">*</span></label>
+        <input type="date" id="dt_nasc">
+      </div>
+      <div class="campo">
+        <label>Idade</label>
+        <input type="text" id="idade" readonly placeholder="—">
+      </div>
+      <div class="campo">
+        <label>Cidade de Nascimento <span class="obrig">*</span></label>
+        <input type="text" id="cidade_nasc">
+      </div>
+      <div class="campo">
+        <label>UF Nascimento <span class="obrig">*</span></label>
+        <select id="uf_nasc">
+          <option value="">—</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+          <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+          <option>SP</option><option>SE</option><option>TO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Sexo <span class="obrig">*</span></label>
+        <div class="opcoes">
+          <label><input type="radio" name="sexo" value="Masculino"> Masculino</label>
+          <label><input type="radio" name="sexo" value="Feminino"> Feminino</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label>Estado Civil <span class="obrig">*</span></label>
+        <div class="opcoes">
+          <label><input type="radio" name="est_civil" value="Solteiro"> Solteiro</label>
+          <label><input type="radio" name="est_civil" value="Casado"> Casado</label>
+          <label><input type="radio" name="est_civil" value="Viuvo"> Viúvo</label>
+          <label><input type="radio" name="est_civil" value="Divorciado"> Divorciado</label>
+          <label><input type="radio" name="est_civil" value="U.Estavel"> U. Estável</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label>Nome do(a) cônjuge</label>
+        <input type="text" id="conjuge">
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Raça <span class="obrig">*</span> <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— conforme autodeclaração (eSocial)</span></label>
+        <div class="opcoes">
+          <label><input type="radio" name="raca" value="Indigena"> Indígena</label>
+          <label><input type="radio" name="raca" value="Branca"> Branca</label>
+          <label><input type="radio" name="raca" value="Preta"> Preta</label>
+          <label><input type="radio" name="raca" value="Parda"> Parda</label>
+          <label><input type="radio" name="raca" value="Amarela"> Amarela</label>
+        </div>
+      </div>
+      <div class="campo">
+        <label>Grau de Escolaridade</label>
+        <select id="escolaridade">
+          <option value="">Selecione</option>
+          <option>Fundamental Incompleto</option>
+          <option>Fundamental Completo</option>
+          <option>Medio Incompleto</option>
+          <option>Medio Completo</option>
+          <option>Superior Incompleto</option>
+          <option>Superior Completo</option>
+          <option>Pos-graduacao</option>
+          <option>Mestrado</option>
+          <option>Doutorado</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label>Possui alguma deficiência?</label>
+        <div class="opcoes">
+          <label><input type="radio" name="def" value="Sim"> Sim</label>
+          <label><input type="radio" name="def" value="Nao" checked> Não</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="campo" id="bloco-def" style="display:none;margin-bottom:12px">
+      <label>Qual deficiência / CID <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— ex: Visual / CID H54</span></label>
+      <div class="grid g2" style="gap:8px">
+        <input type="text" id="def_qual" placeholder="Qual deficiência">
+        <input type="text" id="def_cid"  placeholder="CID">
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Nome do Pai</label>
+        <input type="text" id="nome_pai">
+      </div>
+      <div class="campo">
+        <label>Nome da Mãe <span class="obrig">*</span></label>
+        <input type="text" id="nome_mae">
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Celular (com DDD)</label>
+        <input type="tel" id="celular" placeholder="(00) 00000-0000" maxlength="15">
+      </div>
+      <div class="campo">
+        <label>Telefone p/ contato</label>
+        <input type="tel" id="telefone" placeholder="(00) 0000-0000" maxlength="14">
+      </div>
+      <div class="campo">
+        <label>E-mail</label>
+        <input type="email" id="email" autocomplete="email">
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO 3 — ENDEREÇO
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Endereço</div>
+    <div style="background:#e8eef0;border-left:4px solid #0e6b7a;border-radius:4px;padding:8px 12px;margin-bottom:12px;font-size:.8rem;color:#1f2937;">
+      ℹ️ <strong>Dica:</strong> Ao digitar o CEP, o endereço, bairro, cidade e UF são preenchidos automaticamente. Informe apenas o número.
+    </div>
+
+    <div class="grid g4" style="margin-bottom:12px">
+      <div class="campo">
+        <label>CEP <span class="obrig">*</span> <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— digitar preenche o endereço</span></label>
+        <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+      </div>
+      <div class="campo" style="grid-column: span 2">
+        <label>Logradouro / Endereço <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— preenchido pelo CEP</span></label>
+        <input type="text" id="endereco" autocomplete="street-address">
+      </div>
+      <div class="campo">
+        <label>Número <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— ex: 123 ou S/N</span></label>
+        <input type="text" id="num">
+      </div>
+    </div>
+    <div class="grid g3" style="margin-bottom:4px">
+      <div class="campo">
+        <label>Bairro <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— preenchido pelo CEP</span></label>
+        <input type="text" id="bairro">
+      </div>
+      <div class="campo">
+        <label>Cidade <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— preenchida pelo CEP</span></label>
+        <input type="text" id="cidade_uf">
+      </div>
+      <div class="campo">
+        <label>UF</label>
+        <select id="uf_end">
+          <option value="">—</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+          <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+          <option>SP</option><option>SE</option><option>TO</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO 4 — DOCUMENTOS PESSOAIS
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Documentos Pessoais</div>
+
+    <!-- CPF e RG -->
+    <div class="grid g2" style="margin-bottom:12px">
+      <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">CPF</div>
+        <div class="grid g1">
+          <div class="campo">
+            <label>Número <span class="obrig">*</span></label>
+            <input type="text" id="cpf" placeholder="000.000.000-00" maxlength="14">
+          </div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">RG</div>
+        <div class="grid g3" style="gap:8px">
+          <div class="campo">
+            <label>Número</label>
+            <input type="text" id="rg">
+          </div>
+          <div class="campo">
+            <label>Órgão / UF</label>
+            <input type="text" id="rg_orgao" placeholder="SSP/SP">
+          </div>
+          <div class="campo">
+            <label>Data de Emissão</label>
+            <input type="date" id="rg_emissao">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Título de Eleitor e Reservista -->
+    <div class="grid g2" style="margin-bottom:12px">
+      <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Título de Eleitor</div>
+        <div class="grid g3" style="gap:8px">
+          <div class="campo">
+            <label>Número</label>
+            <input type="text" id="titulo" placeholder="000000000000" maxlength="12">
+          </div>
+          <div class="campo">
+            <label>Zona</label>
+            <input type="text" id="zona" placeholder="Zona">
+          </div>
+          <div class="campo">
+            <label>Seção</label>
+            <input type="text" id="secao" placeholder="Seção">
+          </div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Reservista (homens)</div>
+        <div class="grid g1">
+          <div class="campo">
+            <label>Número</label>
+            <input type="text" id="reservista" placeholder="000000000000" maxlength="12">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CNH -->
+    <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;margin-bottom:12px;">
+      <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">CNH (se possuir)</div>
+      <div class="grid g3" style="gap:8px">
+        <div class="campo">
+          <label>Número</label>
+          <input type="text" id="cnh">
+        </div>
+        <div class="campo">
+          <label>Categoria</label>
+          <input type="text" id="cnh_cat" placeholder="ex: B">
+        </div>
+        <div class="campo">
+          <label>Validade</label>
+          <input type="date" id="cnh_val">
+        </div>
+      </div>
+    </div>
+
+    <!-- PIS e CTPS -->
+    <div class="grid g2" style="margin-bottom:4px">
+      <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">PIS / NIS</div>
+        <div style="font-size:.65rem;color:#64748b;margin-bottom:8px;">Número no cartão do trabalhador ou extrato FGTS</div>
+        <div class="grid g1">
+          <div class="campo">
+            <label>Número</label>
+            <input type="text" id="pis" placeholder="000.00000.00-0" maxlength="14">
+          </div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--borda);border-radius:var(--radius);padding:10px 12px;">
+        <div style="font-size:.68rem;font-weight:700;color:var(--azul-m);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">CTPS Digital</div>
+        <div class="grid g4" style="gap:8px">
+          <div class="campo">
+            <label>Nº</label>
+            <input type="text" id="ctps_num" placeholder="0000000" maxlength="7">
+          </div>
+          <div class="campo">
+            <label>Série</label>
+            <input type="text" id="ctps_serie">
+          </div>
+          <div class="campo">
+            <label>UF</label>
+            <select id="ctps_uf">
+              <option value="">—</option>
+              <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+              <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+              <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+              <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+              <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+              <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+              <option>SP</option><option>SE</option><option>TO</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Emissão</label>
+            <input type="date" id="ctps_emissao">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO 5 — DEPENDENTES (quebra de página na impressão)
+  ════════════════════════════════════════ -->
+  <div class="secao secao-quebra">
+    <div class="secao-titulo">Dependentes / Filhos Menores de 14 Anos</div>
+
+    <div class="grid g3" style="margin-bottom:12px; align-items:center">
+      <div class="campo">
+        <label>Possui filhos menores de 14 anos? <span class="obrig">*</span></label>
+        <div class="opcoes">
+          <label><input type="radio" name="filhos" value="Sim"> Sim</label>
+          <label><input type="radio" name="filhos" value="Nao" checked> Não</label>
+        </div>
+      </div>
+      <div class="campo" id="bloco-qtd" style="display:none">
+        <label>Quantidade (máx. 8)</label>
+        <input type="number" id="qtd_filhos" min="1" max="8" placeholder="1–8">
+      </div>
+    </div>
+
+    <div id="tabela-filhos-wrap" style="display:none; overflow-x:auto">
+      <div style="font-size:.75rem;background:#fff8e1;border:1px solid #f59e0b;border-left:3px solid #f59e0b;border-radius:4px;padding:7px 10px;margin-bottom:8px;color:#78350f;">
+        ⚠️ <strong>CPF é obrigatório</strong> para todos os dependentes — exigência do eSocial. Consulte a certidão de nascimento ou CPF físico da criança.
+      </div>
+      <table class="tabela-filhos">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome Completo</th>
+            <th>Data de Nascimento</th>
+            <th>CPF <span style="color:var(--obrig)">*</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="tr-f1"><td>1</td><td><input type="text" id="f1_nome"></td><td><input type="date" id="f1_nasc"></td><td><input type="text" id="f1_cpf"></td></tr>
+          <tr id="tr-f2"><td>2</td><td><input type="text" id="f2_nome"></td><td><input type="date" id="f2_nasc"></td><td><input type="text" id="f2_cpf"></td></tr>
+          <tr id="tr-f3"><td>3</td><td><input type="text" id="f3_nome"></td><td><input type="date" id="f3_nasc"></td><td><input type="text" id="f3_cpf"></td></tr>
+          <tr id="tr-f4"><td>4</td><td><input type="text" id="f4_nome"></td><td><input type="date" id="f4_nasc"></td><td><input type="text" id="f4_cpf"></td></tr>
+          <tr id="tr-f5"><td>5</td><td><input type="text" id="f5_nome"></td><td><input type="date" id="f5_nasc"></td><td><input type="text" id="f5_cpf"></td></tr>
+          <tr id="tr-f6"><td>6</td><td><input type="text" id="f6_nome"></td><td><input type="date" id="f6_nasc"></td><td><input type="text" id="f6_cpf"></td></tr>
+          <tr id="tr-f7"><td>7</td><td><input type="text" id="f7_nome"></td><td><input type="date" id="f7_nasc"></td><td><input type="text" id="f7_cpf"></td></tr>
+          <tr id="tr-f8"><td>8</td><td><input type="text" id="f8_nome"></td><td><input type="date" id="f8_nasc"></td><td><input type="text" id="f8_cpf"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO — VALE TRANSPORTE
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Vale Transporte</div>
+
+    <div class="grid g2" style="margin-bottom:12px">
+      <div class="campo">
+        <label>Utiliza vale transporte?</label>
+        <div class="opcoes">
+          <label><input type="radio" name="vt" value="Sim"> Sim</label>
+          <label><input type="radio" name="vt" value="Não" checked> Não</label>
+        </div>
+      </div>
+      <div id="bloco-vt" style="display:none">
+        <div class="grid g2" style="gap:12px">
+          <div class="campo">
+            <label>Valor da passagem (R$)</label>
+            <input type="text" id="vt_valor" placeholder="R$ 0,00">
+          </div>
+          <div class="campo">
+            <label>Qtd. diária <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— ida + volta</span></label>
+            <input type="number" id="vt_qtd" min="1" placeholder="ex: 2">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="campo">
+        <label>Ciente do desconto de 6% sobre o salário?</label>
+        <div class="opcoes">
+          <label><input type="radio" name="vt_desc" value="Sim"> Sim</label>
+          <label><input type="radio" name="vt_desc" value="Não"> Não</label>
+        </div>
+      </div>
+      <div class="campo">
+        <div class="grid g2" style="gap:12px">
+          <div class="campo">
+            <label>Empresa (VT)</label>
+            <input type="text" id="vt_empresa">
+          </div>
+          <div class="campo">
+            <label>Nº Cartão VT</label>
+            <input type="text" id="vt_cartao">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO — DADOS BANCÁRIOS
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Dados Bancários</div>
+    <div style="font-size:.78rem;color:#64748b;margin-bottom:10px;">Para pagamento do salário. Informe os dados exatamente como constam no cartão ou aplicativo do banco.</div>
+
+    <div class="grid g4">
+      <div class="campo">
+        <label>Banco <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— ex: Caixa, Bradesco</span></label>
+        <input type="text" id="banco">
+      </div>
+      <div class="campo">
+        <label>Nº Agência <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— sem o dígito</span></label>
+        <input type="text" id="agencia">
+      </div>
+      <div class="campo">
+        <label>Nº Conta <span style="font-weight:400;color:#64748b;text-transform:none;letter-spacing:0;font-size:.65rem;">— com dígito</span></label>
+        <input type="text" id="conta">
+      </div>
+      <div class="campo">
+        <label>Tipo de Conta</label>
+        <div class="opcoes">
+          <label><input type="radio" name="tipo_conta" value="Corrente"> Corrente</label>
+          <label><input type="radio" name="tipo_conta" value="Poupança"> Poupança</label>
+          <label><input type="radio" name="tipo_conta" value="Salário"> Salário</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SEÇÃO 5 — DOCUMENTOS NECESSÁRIOS
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Documentos Necessários para Admissão</div>
+    <div class="checklist">
+      <label><input type="checkbox"> Exame admissional</label>
+      <label><input type="checkbox"> RG</label>
+      <label><input type="checkbox"> CPF e/ou CNH</label>
+      <label><input type="checkbox"> Título de eleitor (opcional)</label>
+      <label><input type="checkbox"> Certidão de nascimento/casamento</label>
+      <label><input type="checkbox"> Comprovante de residência (com CEP)</label>
+      <label><input type="checkbox"> CTPS Digital</label>
+      <label><input type="checkbox"> Dependentes (se houver): cópia do CPF e/ou certidão de nascimento</label>
+      <label><input type="checkbox"> Declaração de vacinação (filhos menores de 6 anos)</label>
+      <label><input type="checkbox"> Declaração escolar (filhos de 7 a 14 anos)</label>
+      <label><input type="checkbox"> 01 foto 3×4 (recente)</label>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       OBSERVAÇÕES
+  ════════════════════════════════════════ -->
+  <div class="secao">
+    <div class="secao-titulo">Observações</div>
+    <div class="campo">
+      <label>Informações adicionais ou observações relevantes</label>
+      <textarea id="observacoes" rows="3" style="border:1px solid var(--borda);border-radius:4px;padding:8px 10px;font-size:.88rem;color:var(--texto);width:100%;resize:vertical;font-family:inherit;"></textarea>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       AVISO DOCUMENTOS LEGÍVEIS
+  ════════════════════════════════════════ -->
+  <div class="aviso-docs">
+    <span class="aviso-icone">⚠️</span>
+    <div>
+      <strong>Atenção ao enviar os documentos:</strong>
+      todos os documentos devem estar <strong>legíveis, sem cortes, sem reflexo e sem borrões</strong>.
+      Fotos escuras, tremidas ou com partes cortadas <strong>não serão aceitas</strong> e poderão atrasar ou impedir o registro na CTPS Digital,
+      conforme exigência da <strong>Portaria MTE nº 1.065/2023</strong>.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       BOTÕES DE AÇÃO
+  ════════════════════════════════════════ -->
+  <div class="acoes">
+    <button class="btn btn-limpar" onclick="limparFormulario()">🗑 Limpar</button>
+    <button class="btn btn-pdf" id="btn-pdf" onclick="salvarPDF()">📄 Salvar PDF</button>
+    <div style="position:relative;display:inline-block;">
+      <button class="btn btn-enviar" id="btn-enviar" onclick="toggleMenuEnviar()">📤 Enviar ▾</button>
+      <div id="menu-enviar" style="display:none;position:absolute;bottom:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--borda);border-radius:var(--radius);box-shadow:var(--sombra);min-width:180px;z-index:100;overflow:hidden;">
+        <button onclick="enviarWhatsApp()" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;border:none;background:none;cursor:pointer;font-size:.88rem;font-weight:600;color:var(--texto);border-bottom:1px solid var(--borda);">💬 WhatsApp</button>
+        <button onclick="enviarEmail()" style="display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;border:none;background:none;cursor:pointer;font-size:.88rem;font-weight:600;color:var(--texto);">📧 E-mail</button>
+      </div>
+    </div>
+  </div>
+</div><!-- fim .card -->
+
+<p class="rodape">
+  Os dados preenchidos ficam apenas nesta aba e são apagados ao fechar ou limpar o formulário.
+  Nenhuma informação é armazenada ou transmitida automaticamente.<br>
+  <span style="margin-top:6px;display:inline-block;opacity:.75;">
+    Desenvolvido por <strong>João Miguel E. F.</strong> &nbsp;·&nbsp;
+    <a href="mailto:contato_joaomiguel@outlook.com" style="color:#0e6b7a;">contato_joaomiguel@outlook.com</a> &nbsp;·&nbsp;
+    © 2025 — Todos os direitos reservados. Uso, cópia ou adaptação somente com autorização do autor.
+  </span>
+</p>
+
+<script>
+  /* ══════════════════════════════════════
+     TOGGLES CONDICIONAIS
+  ══════════════════════════════════════ */
+  document.querySelectorAll('input[name="sabado"]').forEach(r =>
+    r.addEventListener('change', () => {
+      document.getElementById('bloco-sabado').style.display =
+        document.querySelector('input[name="sabado"]:checked').value === 'sim' ? 'grid' : 'none';
+    })
+  );
+  document.querySelectorAll('input[name="def"]').forEach(r =>
+    r.addEventListener('change', () => {
+      document.getElementById('bloco-def').style.display =
+        document.querySelector('input[name="def"]:checked').value === 'Sim' ? 'block' : 'none';
+    })
+  );
+  document.querySelectorAll('input[name="filhos"]').forEach(r =>
+    r.addEventListener('change', () => {
+      const sim = document.querySelector('input[name="filhos"]:checked').value === 'Sim';
+      document.getElementById('bloco-qtd').style.display = sim ? 'block' : 'none';
+      document.getElementById('tabela-filhos-wrap').style.display = sim ? 'block' : 'none';
+    })
+  );
+  document.querySelectorAll('input[name="vt"]').forEach(r =>
+    r.addEventListener('change', () => {
+      document.getElementById('bloco-vt').style.display =
+        document.querySelector('input[name="vt"]:checked').value === 'Sim' ? 'block' : 'none';
+    })
+  );
+
+  /* ══════════════════════════════════════
+     CONTADOR DE FILHOS — ocultar linhas não usadas (máx 8)
+  ══════════════════════════════════════ */
+  document.getElementById('qtd_filhos').addEventListener('input', function() {
+    const qtd = parseInt(this.value) || 0;
+    for (let i = 1; i <= 8; i++) {
+      const tr = document.getElementById(`tr-f${i}`);
+      if (tr) tr.style.display = (i <= qtd) ? '' : 'none';
+    }
+  });
+
+  /* ══════════════════════════════════════
+     MÁSCARAS DE CAMPOS
+  ══════════════════════════════════════ */
+  function aplicarMascara(id, fn) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', e => { e.target.value = fn(e.target.value); });
+  }
+
+  function mascCPF(v) {
+    return v.replace(/\D/g,'').slice(0,11)
+      .replace(/(\d{3})(\d)/,'$1.$2')
+      .replace(/(\d{3})(\d)/,'$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+  }
+  ['cpf','f1_cpf','f2_cpf','f3_cpf','f4_cpf','f5_cpf','f6_cpf','f7_cpf','f8_cpf'].forEach(id => aplicarMascara(id, mascCPF));
+
+  function mascCNPJ(v) {
+    return v.replace(/\D/g,'').slice(0,14)
+      .replace(/(\d{2})(\d)/,'$1.$2')
+      .replace(/(\d{3})(\d)/,'$1.$2')
+      .replace(/(\d{3})(\d)/,'$1/$2')
+      .replace(/(\d{4})(\d{1,2})$/,'$1-$2');
+  }
+  aplicarMascara('cnpj', mascCNPJ);
+
+  function mascCEP(v) {
+    return v.replace(/\D/g,'').slice(0,8).replace(/(\d{5})(\d)/,'$1-$2');
+  }
+  aplicarMascara('cep', mascCEP);
+
+  function mascCelular(v) {
+    return v.replace(/\D/g,'').slice(0,11)
+      .replace(/(\d{2})(\d)/,'($1) $2')
+      .replace(/(\d{5})(\d)/,'$1-$2');
+  }
+  aplicarMascara('celular', mascCelular);
+
+  function mascTelefone(v) {
+    return v.replace(/\D/g,'').slice(0,10)
+      .replace(/(\d{2})(\d)/,'($1) $2')
+      .replace(/(\d{4})(\d)/,'$1-$2');
+  }
+  aplicarMascara('telefone', mascTelefone);
+
+  function mascPIS(v) {
+    return v.replace(/\D/g,'').slice(0,11)
+      .replace(/(\d{3})(\d)/,'$1.$2')
+      .replace(/(\d{5})(\d)/,'$1.$2')
+      .replace(/(\d{2})(\d{1})$/,'$1-$2');
+  }
+  aplicarMascara('pis', mascPIS);
+
+  function mascNumerico12(v) { return v.replace(/\D/g,'').slice(0,12); }
+  aplicarMascara('titulo', mascNumerico12);
+  aplicarMascara('reservista', mascNumerico12);
+
+  /* ── Máscara salário ── */
+  document.getElementById('salario').addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'');
+    if (!v) { this.value = ''; return; }
+    v = (parseInt(v) / 100).toFixed(2);
+    this.value = 'R$ ' + v.replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  });
+
+  /* ══════════════════════════════════════
+     MAIÚSCULAS SEM ACENTO — todos os campos de texto
+     (exceto e-mail, cep, cpf, cnpj, pis, placeholders numéricos)
+  ══════════════════════════════════════ */
+  const IDS_SEM_MAIUSCULA = new Set(['email','cep','cpf','cnpj','pis','f1_cpf','f2_cpf','f3_cpf','f4_cpf','f5_cpf','f6_cpf','f7_cpf','f8_cpf','salario','reservista','titulo']);
+
+  function semAcento(v) {
+    return v.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
+  }
+
+  document.querySelectorAll('input[type="text"], input[type="tel"]').forEach(el => {
+    if (IDS_SEM_MAIUSCULA.has(el.id)) return;
+    el.addEventListener('input', function() {
+      const pos = this.selectionStart;
+      this.value = semAcento(this.value);
+      try { this.setSelectionRange(pos, pos); } catch(e){}
+    });
+  });
+
+  /* ══════════════════════════════════════
+     IDADE AUTOMÁTICA
+  ══════════════════════════════════════ */
+  document.getElementById('dt_nasc').addEventListener('change', function() {
+    if (!this.value) { document.getElementById('idade').value = ''; return; }
+    const nasc = new Date(this.value + 'T00:00');
+    const hoje = new Date();
+    let anos = hoje.getFullYear() - nasc.getFullYear();
+    const m = hoje.getMonth() - nasc.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) anos--;
+    document.getElementById('idade').value = anos >= 0 ? anos + ' anos' : '';
+  });
+
+  /* ══════════════════════════════════════
+     DATA DE ADMISSÃO — bloquear finais de semana
+  ══════════════════════════════════════ */
+  document.getElementById('dt_admissao').addEventListener('change', function() {
+    if (!this.value) return;
+    const d = new Date(this.value + 'T00:00');
+    const dia = d.getDay(); // 0=dom, 6=sab
+    if (dia === 0 || dia === 6) {
+      alert('⚠️ A data de admissão informada cai em um ' + (dia === 0 ? 'domingo' : 'sábado') + '.\nVerifique se está correta.');
+    }
+  });
+
+  /* ══════════════════════════════════════
+     BUSCA CEP — ViaCEP
+  ══════════════════════════════════════ */
+  document.getElementById('cep').addEventListener('blur', function() {
+    const cep = this.value.replace(/\D/g,'');
+    if (cep.length !== 8) return;
+    fetch('https://viacep.com.br/ws/' + cep + '/json/')
+      .then(r => r.json())
+      .then(d => {
+        if (d.erro) { alert('CEP não encontrado. Verifique o número informado.'); return; }
+        document.getElementById('endereco').value  = semAcento(d.logradouro || '');
+        document.getElementById('bairro').value    = semAcento(d.bairro     || '');
+        document.getElementById('cidade_uf').value = semAcento(d.localidade || '');
+        document.getElementById('uf_end').value   = d.uf || '';
+      })
+      .catch(() => alert('Não foi possível consultar o CEP. Verifique sua conexão.'));
+  });
+
+  /* ══════════════════════════════════════
+     VALIDAÇÃO CPF (dígito verificador)
+  ══════════════════════════════════════ */
+  function cpfValido(cpf) {
+    const n = cpf.replace(/\D/g,'');
+    if (n.length !== 11 || /^(\d)\1+$/.test(n)) return false;
+    let s = 0;
+    for (let i = 0; i < 9; i++) s += parseInt(n[i]) * (10 - i);
+    let r = (s * 10) % 11;
+    if (r === 10 || r === 11) r = 0;
+    if (r !== parseInt(n[9])) return false;
+    s = 0;
+    for (let i = 0; i < 10; i++) s += parseInt(n[i]) * (11 - i);
+    r = (s * 10) % 11;
+    if (r === 10 || r === 11) r = 0;
+    return r === parseInt(n[10]);
+  }
+
+  /* ══════════════════════════════════════
+     VALIDAÇÃO E-MAIL
+  ══════════════════════════════════════ */
+  function emailValido(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  }
+
+  /* ══════════════════════════════════════
+     VALIDAÇÃO OBRIGATÓRIOS
+  ══════════════════════════════════════ */
+  function validarFormulario() {
+    document.querySelectorAll('.campo-invalido').forEach(el => el.classList.remove('campo-invalido'));
+    const msgAnt = document.getElementById('msg-validacao');
+    if (msgAnt) msgAnt.remove();
+
+    const erros = [];
+
+    // Campos de texto/date/select com *
+    document.querySelectorAll('label .obrig').forEach(obrigEl => {
+      const label = obrigEl.closest('label');
+      if (!label) return;
+      const campo = label.closest('.campo');
+      if (!campo) return;
+      const input = campo.querySelector('input:not([type="radio"]):not([type="checkbox"]), select');
+      if (input && !input.value.trim()) {
+        campo.classList.add('campo-invalido');
+        erros.push(label.textContent.replace('*','').trim());
+      }
+    });
+
+    // Radio groups obrigatórios
+    [
+      { name: 'raca',      label: 'Raça' },
+      { name: 'sexo',      label: 'Sexo' },
+      { name: 'est_civil', label: 'Estado Civil' },
+      { name: 'filhos',    label: 'Filhos menores de 14 anos' },
+    ].forEach(g => {
+      if (!document.querySelector(`input[name="${g.name}"]:checked`)) {
+        const el = document.querySelector(`input[name="${g.name}"]`)?.closest('.campo');
+        if (el) el.classList.add('campo-invalido');
+        erros.push(g.label);
+      }
+    });
+
+    // Validação CPF
+    const cpfEl = document.getElementById('cpf');
+    if (cpfEl.value.trim() && !cpfValido(cpfEl.value)) {
+      cpfEl.closest('.campo').classList.add('campo-invalido');
+      erros.push('CPF (número inválido — verifique os dígitos)');
+    }
+
+    // Validação e-mail
+    const emailEl = document.getElementById('email');
+    if (emailEl.value.trim() && !emailValido(emailEl.value.trim())) {
+      emailEl.closest('.campo').classList.add('campo-invalido');
+      erros.push('E-mail (formato inválido)');
+    }
+
+    if (erros.length > 0) {
+      const msg = document.createElement('div');
+      msg.id = 'msg-validacao';
+      msg.innerHTML = `<strong>⚠️ Atenção: verifique os campos abaixo antes de continuar.</strong>• ${erros.join('<br>• ')}`;
+      document.querySelector('.acoes').insertAdjacentElement('beforebegin', msg);
+      msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+    return true;
+  }
+
+  /* ══════════════════════════════════════
+     LIMPAR FORMULÁRIO
+  ══════════════════════════════════════ */
+  function limparFormulario(){
+    if(!confirm('Deseja apagar todos os dados preenchidos?')) return;
+    document.querySelectorAll('input[type="text"], input[type="date"], input[type="email"], input[type="tel"], input[type="number"], input[type="time"], select, textarea').forEach(el => {
+      el.value = '';
+    });
+    document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(el => {
+      el.checked = false;
+    });
+    // Restaurar radio buttons padrão
+    ['input[name="sabado"][value="nao"]','input[name="def"][value="Não"]',
+     'input[name="filhos"][value="Não"]','input[name="vt"][value="Não"]'].forEach(sel => {
+      const el = document.querySelector(sel);
+      if (el) el.checked = true;
+    });
+    // Ocultar blocos condicionais
+    ['bloco-sabado','bloco-def','bloco-qtd','tabela-filhos-wrap','bloco-vt'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
+    // Restaurar linhas da tabela de filhos
+    for (let i = 1; i <= 8; i++) {
+      const tr = document.getElementById(`tr-f${i}`);
+      if (tr) tr.style.display = 'none';
+    }
+    // Remover destaques e mensagem de validação
+    document.querySelectorAll('.campo-invalido').forEach(el => el.classList.remove('campo-invalido'));
+    const msgVal = document.getElementById('msg-validacao');
+    if (msgVal) msgVal.remove();
+  }
+
+  /* ══════════════════════════════════════
+     GERAR PDF — CSS inline antes da captura
+     (html2canvas ignora @media print)
+  ══════════════════════════════════════ */
+  function gerarPDF(callback) {
+
+    /* ── 1. Ocultar elementos que não vão para o PDF ── */
+    const ocultarEls = ['btn-pdf','btn-enviar'].map(id => document.getElementById(id));
+    const menuEnviar = document.getElementById('menu-enviar');
+    const avisoEl   = document.querySelector('.aviso-docs');
+    const acoes     = document.querySelector('.acoes');
+    const rodape    = document.querySelector('.rodape');
+    const msgVal    = document.getElementById('msg-validacao');
+    const dicaEl    = document.getElementById('dica-preench');
+    [...ocultarEls, acoes, rodape, avisoEl, msgVal, dicaEl, menuEnviar]
+      .forEach(el => { if (el) el.style.display = 'none'; });
+
+    /* ── 2. Mostrar blocos condicionais somente se a opção foi selecionada ── */
+    const condicionais = ['bloco-sabado','bloco-def','bloco-qtd','tabela-filhos-wrap','bloco-vt'];
+    const estadosOriginais = {};
+    condicionais.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        estadosOriginais[id] = el.style.display;
+        // Só forçar exibição se o bloco já estava visível (opção marcada pelo usuário)
+        // bloco-sabado: mostrar só se sábado=sim
+        if (id === 'bloco-sabado') {
+          const sabSim = document.querySelector('input[name="sabado"][value="sim"]');
+          if (sabSim && sabSim.checked) el.style.display = 'grid';
+        }
+        // bloco-def: mostrar só se deficiência=Sim
+        else if (id === 'bloco-def') {
+          const defSim = document.querySelector('input[name="def"][value="Sim"]');
+          if (defSim && defSim.checked) el.style.display = 'block';
+        }
+        // bloco-qtd e tabela de filhos: mostrar só se filhos=Sim
+        else if (id === 'bloco-qtd' || id === 'tabela-filhos-wrap') {
+          const filhosSim = document.querySelector('input[name="filhos"][value="Sim"]');
+          if (filhosSim && filhosSim.checked) el.style.display = 'block';
+        }
+        // bloco-vt: mostrar só se vt=Sim
+        else if (id === 'bloco-vt') {
+          const vtSim = document.querySelector('input[name="vt"][value="Sim"]');
+          if (vtSim && vtSim.checked) el.style.display = 'block';
+        }
+      }
+    });
+
+    /* ── 2b. Na impressão: dependentes — ocultar seção inteira se não tem filhos ── */
+    const secaoDependentes = document.querySelector('.secao-quebra');
+    let secaoDepOriginalDisplay = '';
+    if (secaoDependentes) {
+      const filhosNao = document.querySelector('input[name="filhos"][value="Nao"]');
+      const filhosSim = document.querySelector('input[name="filhos"][value="Sim"]');
+      secaoDepOriginalDisplay = secaoDependentes.style.display;
+      if (!filhosSim || !filhosSim.checked) {
+        secaoDependentes.style.display = 'none';
+      }
+    }
+
+    /* ── 3. Injetar <style> compacto para captura do html2canvas ── */
+    const styleEl = document.createElement('style');
+    styleEl.id = '__pdf-style__';
+    styleEl.textContent = `
+      body { font-size: 9px !important; background: #fff !important; padding: 0 !important; }
+      header { max-width: 100% !important; border-radius: 0 !important; padding: 5px 10px !important; }
+      header h1 { font-family: 'Playfair Display', Georgia, serif ! font-size: 10px !important; }
+      header p  { font-size: 8px !important; margin-top: 2px !important; }
+      .card {
+        max-width: 100% !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 8px 10px !important;
+      }
+      .secao { margin-bottom: 8px !important; }
+      .secao-titulo {
+        font-size: 8px !important;
+        padding: 3px 8px !important;
+        margin-bottom: 5px !important;
+        background: #1a3a5c !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .grid { gap: 3px 6px !important; }
+      label { font-size: 6.5px !important; margin-bottom: 1px !important; }
+      input[type="text"], input[type="date"], input[type="email"],
+      input[type="tel"], input[type="number"], input[type="time"], select {
+        height: 16px !important;
+        padding: 1px 3px !important;
+        font-size: 8px !important;
+        border: 1px solid #aaa !important;
+        border-radius: 2px !important;
+      }
+      textarea { height: 30px !important; font-size: 8px !important; padding: 2px 4px !important; }
+      .opcoes { gap: 2px 8px !important; padding-top: 1px !important; }
+      .opcoes label { font-size: 7.5px !important; }
+      .opcoes input[type="radio"],
+      .opcoes input[type="checkbox"] { width: 9px !important; height: 9px !important; }
+      .tabela-filhos th { font-size: 6.5px !important; padding: 2px 4px !important; }
+      .tabela-filhos td { padding: 1px 3px !important; }
+      .tabela-filhos input { font-size: 7.5px !important; height: auto !important; }
+      .checklist { grid-template-columns: 1fr 1fr !important; gap: 3px 12px !important; }
+      .checklist label { font-size: 7.5px !important; }
+      .checklist input[type="checkbox"] { width: 9px !important; height: 9px !important; }
+      .g2   { grid-template-columns: 1fr 1fr !important; }
+      .g3   { grid-template-columns: 1fr 1fr 1fr !important; }
+      .g4   { grid-template-columns: 1fr 1fr 1fr 1fr !important; }
+      .g24  { grid-template-columns: 2fr 4fr !important; }
+      .g13  { grid-template-columns: 1fr 3fr !important; }
+      .g31  { grid-template-columns: 3fr 1fr !important; }
+      .g211 { grid-template-columns: 2fr 1fr 1fr !important; }
+      .g1111{ grid-template-columns: 1fr 1fr 1fr 1fr !important; }
+      .g2111{ grid-template-columns: 2fr 1fr 1fr 1fr !important; }
+      .secao-quebra { page-break-before: always !important; break-before: always !important; }
+      .secao { page-break-inside: avoid !important; break-inside: avoid !important; }
+      .campo-invalido input, .campo-invalido select { border-color: #aaa !important; box-shadow: none !important; }
+      #msg-validacao { display: none !important; }
+    `;
+    document.head.appendChild(styleEl);
+
+    /* ── 4. Forçar largura do formulário para A4 (~794px a 96dpi) ── */
+    const form = document.getElementById('formulario');
+    const largOrig = form.style.width;
+    const maxOrig  = form.style.maxWidth;
+    form.style.width    = '794px';
+    form.style.maxWidth = '794px';
+
+    const headerEl = document.querySelector('header');
+    const headerMaxOrig = headerEl ? headerEl.style.maxWidth : '';
+    if (headerEl) headerEl.style.maxWidth = '794px';
+
+    /* ── 5. Nome do arquivo ── */
+    const nome    = document.getElementById('nome').value.trim().replace(/\s+/g,'_') || 'Colaborador';
+    const empresa = document.getElementById('empresa').value.trim().replace(/\s+/g,'_') || 'Empresa';
+    const hoje    = new Date().toLocaleDateString('pt-BR').replace(/\//g,'-');
+    const nomeArquivo = `Ficha_Cadastro_${nome}_${hoje}_${empresa}.pdf`;
+
+    /* ── 6. Opções do html2pdf ── */
+    const opt = {
+      margin:      [6, 6, 6, 6],
+      filename:    nomeArquivo,
+      image:       { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale:      1.5,
+        useCORS:    true,
+        logging:    false,
+        width:      794,
+        windowWidth: 794
+      },
+      jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak:   { mode: ['css', 'legacy'], before: '.secao-quebra', avoid: '.secao' }
+    };
+
+    /* ── 7. Gerar e restaurar ── */
+    html2pdf().set(opt).from(document.getElementById('formulario')).toPdf().get('pdf').then(pdf => {
+
+      // Remover style injetado
+      const s = document.getElementById('__pdf-style__');
+      if (s) s.remove();
+
+      // Restaurar largura do card
+      form.style.width    = largOrig;
+      form.style.maxWidth = maxOrig;
+      if (headerEl) headerEl.style.maxWidth = headerMaxOrig;
+
+      // Restaurar elementos ocultos
+      [acoes, rodape, avisoEl, dicaEl].forEach(el => { if (el) el.style.display = ''; });
+      if (msgVal) msgVal.style.display = '';
+
+      // Restaurar condicionais
+      condicionais.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = estadosOriginais[id] || 'none';
+      });
+      // Restaurar seção dependentes
+      if (secaoDependentes) secaoDependentes.style.display = secaoDepOriginalDisplay;
+
+      callback(pdf, nomeArquivo);
+    });
+  }
+
+  /* ── Salvar PDF via impressão do navegador ── */
+  function salvarPDF() {
+    if (!validarFormulario()) return;
+    window.print();
+  }
+
+  /* ── Toggle menu Enviar ── */
+  function toggleMenuEnviar() {
+    const m = document.getElementById('menu-enviar');
+    m.style.display = m.style.display === 'none' ? 'block' : 'none';
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#btn-enviar') && !e.target.closest('#menu-enviar')) {
+      const m = document.getElementById('menu-enviar');
+      if (m) m.style.display = 'none';
+    }
+  });
+
+  /* ── Enviar via WhatsApp ── */
+  function enviarWhatsApp() {
+    document.getElementById('menu-enviar').style.display = 'none';
+    if (!validarFormulario()) return;
+    const btn = document.getElementById('btn-enviar');
+    btn.textContent = '⏳ Gerando PDF...';
+    btn.disabled = true;
+    gerarPDF((pdf, nomeArquivo) => {
+      pdf.save(nomeArquivo);
+      btn.textContent = '📤 Enviar ▾';
+      btn.disabled = false;
+      setTimeout(() => {
+        const nomeFunc   = document.getElementById('nome').value.trim()    || 'Novo Colaborador';
+        const nomeEmp    = document.getElementById('empresa').value.trim() || '';
+        const dtAdm      = document.getElementById('dt_admissao').value;
+        const dataFmt    = dtAdm ? new Date(dtAdm + 'T00:00').toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR');
+        const empresaStr = nomeEmp ? ` – ${nomeEmp}` : '';
+        const msg = [
+          `📋 *FICHA DE CADASTRO – ${nomeFunc.toUpperCase()}${empresaStr} – ${dataFmt}*`,
+          '',
+          '📎 O arquivo PDF foi gerado e salvo em seu dispositivo.',
+          '',
+          'Por favor, localize o arquivo baixado e anexe-o nesta conversa antes de enviar a documentação.',
+          '',
+          '⚠️ Envie também todos os documentos necessários:',
+          '• Legíveis, sem cortes e sem borrões',
+          '• Fotos nítidas, sem reflexo ou sombra',
+          '• Documentos de frente e verso quando necessário',
+          '',
+          '_Documentos ilegíveis não serão aceitos e poderão atrasar o registro (Portaria MTE nº 1.065/2023)._',
+        ].join('\n');
+        window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+      }, 800);
+    });
+  }
+
+  /* ── Enviar por E-mail ── */
+  function enviarEmail() {
+    document.getElementById('menu-enviar').style.display = 'none';
+    if (!validarFormulario()) return;
+    const btn = document.getElementById('btn-enviar');
+    btn.textContent = '⏳ Gerando PDF...';
+    btn.disabled = true;
+    gerarPDF((pdf, nomeArquivo) => {
+      pdf.save(nomeArquivo);
+      btn.textContent = '📤 Enviar ▾';
+      btn.disabled = false;
+      const nomeFunc = document.getElementById('nome').value.trim() || 'Novo Colaborador';
+      const assunto  = encodeURIComponent(`Ficha de Cadastro - ${nomeFunc}`);
+      const corpo    = encodeURIComponent(
+        'Prezados,\n\nSegue em anexo a ficha de cadastro preenchida para admissão.\n\nSolicito a gentileza de anexar o arquivo PDF gerado e encaminhar juntamente com os documentos necessários.\n\nAtenciosamente.'
+      );
+      setTimeout(() => {
+        window.location.href = `mailto:pessoal_r7@outlook.com?subject=${assunto}&body=${corpo}`;
+        alert('⚠️ Atenção: O PDF foi gerado e salvo no seu dispositivo.\n\nLocalize o arquivo e anexe-o manualmente ao e-mail antes de enviar.');
+      }, 800);
+    });
+  }
+
+  /* ── Aviso ao fechar aba com dados preenchidos ── */
+  window.addEventListener('beforeunload', (e) => {
+    const temDados = [...document.querySelectorAll('input[type="text"], input[type="date"], input[type="email"], input[type="tel"], textarea')]
+      .some(el => el.value.trim() !== '');
+    if (temDados) {
+      e.preventDefault();
+      e.returnValue = 'Os dados preenchidos serão perdidos. Deseja realmente sair?';
+    }
+    // Limpar dados antes de sair
+    document.querySelectorAll('input, select, textarea').forEach(el => {
+      if(el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+      else el.value = '';
+    });
+  });
+</script>
+
+</body>
+</html>
